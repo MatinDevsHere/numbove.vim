@@ -1,23 +1,35 @@
-" Set up default mappings and commands
-if !exists('g:wordjump_disable_default_mappings')
-    nnoremap <silent> <Esc> :call wordjump#clear_floats()<CR>:nohlsearch<CR>
+" plugin/wordjump.vim - Main plugin file
+
+if exists('g:loaded_wordjump')
+    finish
 endif
+let g:loaded_wordjump = 1
 
-if !exists('g:wordjump_disable_default_commands')
-    command! TriggerNums call wordjump#toggle_enabled()
-endif
+" Configuration
+let g:wordjump_delay = get(g:, 'wordjump_delay', 100)
+let g:wordjump_max_targets = get(g:, 'wordjump_max_targets', 20)
 
-" Set up autocommands
-augroup WordJumpNumbers
-    autocmd!
-    autocmd CursorMoved,CursorMovedI,ModeChanged * call wordjump#handle_cursor_move()
-    autocmd WinScrolled,BufEnter,TextChanged * call wordjump#show_numbers()
-augroup END
-
-" Define highlight groups
+" Highlight groups
 hi def WordJump1 guifg=#FFD700 guibg=#404040
 hi def WordJump2 guifg=#00FF00 guibg=#404040
 hi def WordJump3 guifg=#FFA500 guibg=#404040
 hi def WordJump4 guifg=#FF0000 guibg=#404040
 hi def WordJump5 guifg=#800080 guibg=#404040
 hi def WordJump6 guifg=#A52A2A guibg=#404040
+
+" Mappings
+if !exists('g:wordjump_disable_default_mappings')
+    nnoremap <silent> <Esc> :call wordjump#clear()<CR>:nohlsearch<CR>
+endif
+
+" Commands
+if !exists('g:wordjump_disable_default_commands')
+    command! WordJumpToggle call wordjump#toggle()
+endif
+
+" Autocommands
+augroup WordJump
+    autocmd!
+    autocmd CursorMoved,CursorMovedI,ModeChanged * call wordjump#schedule_update()
+    autocmd WinScrolled,BufEnter,TextChanged,InsertEnter * call wordjump#clear()
+augroup END
