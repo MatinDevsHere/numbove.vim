@@ -37,14 +37,12 @@ function! wordjump#schedule_update() abort
     let current_lnum = line('.')
     let now = reltime()
 
-    " Check if we're still in the same valid context
     if current_buf != s:state.last_buf || current_lnum != s:state.last_lnum
         call wordjump#clear()
         let s:state.last_buf = current_buf
         let s:state.last_lnum = current_lnum
     endif
 
-    " Rate limiting
     if s:state.timer != -1 || s:state.cooldown > str2float(reltimestr(now))
         return
     endif
@@ -69,7 +67,6 @@ function! s:update_numbers() abort
     let win = nvim_get_current_win()
     let buf = bufnr('%')
 
-    " Use cached positions if available
     if lnum == s:state.cache.lnum && text == s:state.cache.text
         let positions = s:state.cache.positions
     else
@@ -92,7 +89,7 @@ function! s:get_word_starts() abort
     let col = 0
 
     while 1
-        let [match_start, match_end] = matchstrpos(line, '\v(^|\S)\zs\S', col)
+        let [_, match_start, match_end] = matchstrpos(line, '\v(^|\S)\zs\S', col)
         if match_start == -1 | break | endif
         call add(positions, match_start)
         let col = match_end
@@ -119,7 +116,6 @@ function! s:calculate_targets(positions, cursor_col) abort
     let targets = []
     if on_word | call add(targets, {'pos': a:cursor_col, 'label': 0}) | endif
 
-    " Process forward targets
     let i = 1
     for pos in sort(forward)
         if i > g:wordjump_max_targets | break | endif
@@ -127,7 +123,6 @@ function! s:calculate_targets(positions, cursor_col) abort
         let i += 1
     endfor
 
-    " Process backward targets
     let i = 1
     for pos in sort(backward, function('s:reverse_compare'))
         if i > g:wordjump_max_targets | break | endif
