@@ -1,0 +1,38 @@
+*wordjump.txt*  Plugin documentation for WordJump
+
+Author: Your Name
+Version: 1.0
+
+==============================================================================
+CONTENTS                                         *wordjump-contents*
+
+1. Introduction ................ |wordjump-introduction|
+2. Commands .................... |wordjump-commands|
+3. Mappings .................... |wordjump-mappings|
+4. Configuration ............... |wordjump-configuration|
+
+==============================================================================
+INTRODUCTION                                     *wordjump-introduction*
+
+This plugin shows numbered labels for word jumps similar to some popular
+IDEs. Press <Esc> to clear the labels.
+
+==============================================================================
+COMMANDS                                        *wordjump-commands*
+
+:TriggerNums                   Toggle the plugin's enabled state
+
+==============================================================================
+MAPPINGS                                       *wordjump-mappings*
+
+<Esc>                          Clear labels and search highlighting
+
+==============================================================================
+CONFIGURATION                                  *wordjump-configuration*
+
+To disable default mappings: >
+    let g:wordjump_disable_default_mappings = 1
+<
+To disable default commands: >
+    let g:wordjump_disable_default_commands = 1
+<
