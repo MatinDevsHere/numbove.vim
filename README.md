@@ -6,4 +6,4 @@ A Vim/Neovim plugin that shows numbered labels for word navigation.
 
 Using [vim-plug](https://github.com/junegunn/vim-plug):
 ```vim
-Plug 'yourusername/wordjump.nvim'
+Plug 'MatinDevsHere/numbove.vim'
