@@ -1,5 +1,7 @@
 " wordjump.vim - Core functionality for WordJump plugin
 
+" wordjump.vim - Core functionality for WordJump plugin
+
 let s:floats = []
 let s:enabled = 1
 
